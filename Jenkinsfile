@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Create File') {
             steps {
-                sh 'echo "Hello Jenkins" > test123.txt'
+                sh 'echo "Hello Jenkins finally ho gay " > test123.txt'
             }
         }
     }
