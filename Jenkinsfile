@@ -1,26 +1,36 @@
 pipeline {
-    agent any   // single Jenkins node
-
+    agent any
     stages {
-        stage('Clone Code') {
+        stage("code") {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/nitish-404-found/try.git'
+                sh 'echo "hello jenkins" > testt.txt'
+                git url:"https://github.com/nitish-404-found/try.git" , branch:"main"
             }
         }
+      stage('Build Image') {
+    steps {
+        sh 'docker build -t nitish8210/myapp:latest .'
+    }
+}
 
-        stage('Check Node') {
-            steps {
-                sh 'node -v'
+        stage("run"){
+            steps{
+                sh "docker run -d -p 3000:3000 nitish8210/myapp:latest"
             }
         }
-
-        stage('Run Server') {
+         stage('Login to Docker Hub') {
             steps {
-                sh '''
-                npm install || true
-                nohup npm start &
-                '''
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'jenkinspass',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS'
+                    )
+                ]) {
+                    sh "docker login -u ${env.DOCKER_USER} -p ${env.DOCKER_PASS}" 
+                     sh "docker push ${env.DOCKER_USER}/myapp"
+                    
+                }
             }
         }
     }
