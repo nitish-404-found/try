@@ -12,13 +12,13 @@ pipeline {
 
     post {
         success {
-            mail to: 'nitish90901221@gmail.com',
+            mail to: 'nkdabur7@gmail.com',
                  subject: 'SUCCESS',
                  body: 'Build SUCCESS'
         }
 
         failure {
-            mail to: 'nitish90901221@gmail.com',
+            mail to: 'nkdabur7@gmail.com',
                  subject: 'FAILURE',
                  body: 'Build FAILURE'
         }
