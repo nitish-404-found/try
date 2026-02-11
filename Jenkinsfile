@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent {labels :"ishkalabel"}
     stages {
         stage("code") {
             steps {
@@ -18,20 +18,7 @@ pipeline {
                 sh "docker run -d -p 3000:3000 nitish8210/myapp:latest"
             }
         }
-         stage('Login to Docker Hub') {
-            steps {
-                withCredentials([
-                    usernamePassword(
-                        credentialsId: 'jenkinspass',
-                        usernameVariable: 'DOCKER_USER',
-                        passwordVariable: 'DOCKER_PASS'
-                    )
-                ]) {
-                    sh "docker login -u ${env.DOCKER_USER} -p ${env.DOCKER_PASS}" 
-                     sh "docker push ${env.DOCKER_USER}/myapp"
-                    
-                }
-            }
+        
         }
     }
 }
