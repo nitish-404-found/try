@@ -10,17 +10,23 @@ pipeline {
         }
     }
 
-    post {
-        success {
-            mail to: 'nkdabur7@gmail.com',
-                 subject: 'SUCCESS',
-                 body: 'Build SUCCESS'
-        }
-
-        failure {
-            mail to: 'nkdabur7@gmail.com',
-                 subject: 'FAILURE',
-                 body: 'Build FAILURE'
-        }
+  post {
+    success {
+        emailext(
+            to: 'nkdabur7@gmail.com',
+            subject: 'SUCCESS',
+            body: 'Build SUCCESS',
+            from: 'nitish90901221@gmail.com'
+        )
     }
+
+    failure {
+        emailext(
+            to: 'nkdabur7@gmail.com',
+            subject: 'FAILURE',
+            body: 'Build FAILURE',
+            from: 'nitish90901221@gmail.com'
+        )
+    }
+}
 }
